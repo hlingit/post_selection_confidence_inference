@@ -7,3 +7,5 @@ Reason why this post-selection correction is needed: classical confidence infere
 In the `example.R`, we showcase how to build a corrected confidence interval for a predicted mean at new data point $x_{new}$ for an OLS whose model is determined by AIC. Here we consider a linear model $Y=X\beta+\epsilon$. The sample size is $n=50$, the number of candidate predictors $p=10$, and the ground truth $\beta^*=(1,2,3,0,0,\cdots,0)$ has only three nonzero elements.
 
 The result shows that the corrected confidence interval is wider than the uncorrected, problematic one.
+
+In the `motivation.R`, we provide the R code to replicate the result in the motivating example. It can be seen that the uncorrected, classical confidence interval have an empirical coverage significantly smaller than the target level, regardless of whether $\sigma$ is known or not.
