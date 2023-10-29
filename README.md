@@ -8,4 +8,4 @@ In the `example.R`, we showcase how to build a corrected confidence interval for
 
 The result shows that the corrected confidence interval is wider than the uncorrected, problematic one.
 
-In the `motivation.R`, we provide the R code to replicate the result in the motivating example. It can be seen that the uncorrected, classical confidence interval have an empirical coverage significantly smaller than the target level, regardless of whether $\sigma$ is known or not.
+In the `motivation.R`, we provide the R code to replicate the result in the motivating example. It can be seen that the uncorrected, classical confidence intervals have an empirical coverage significantly smaller than the target level, regardless of whether $\sigma$ is known or not.
