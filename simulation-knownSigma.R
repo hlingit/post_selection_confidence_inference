@@ -8,7 +8,7 @@ library(leaps)
 library(MASS)
 
 #==============PART 1: helper functions===============
-# perform post-selection confidence intervals
+# perform post-selection correction for confidence inference
 postICci=function(X_dt, y, selected, alls, new_xpoint, criteria='aic', alpha=0.05, sigma2){
   #input:
   #- X_dt: design matrix
@@ -29,7 +29,7 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, criteria='aic', alpha=0.0
   }else if(criteria=='bic'){
     cons=log(n)
   }else if(criteria=='aicc'){
-    #no cons
+    #pass
   }
   else{
     print("must be either aic or bic!")
