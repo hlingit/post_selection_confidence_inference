@@ -353,7 +353,7 @@ simulate <- function(N, B, p, statistic, sigma2=1,alpha=0.05){
   
 }
 
-#===============PART2: SIMULATION==============================
+
 # Function generates a correlation matrix corresponding to AR(1) dependence structure.
 ar1_matrix <- function(n, rho) {
   exponent <- abs(matrix(1:n - 1, nrow = n, ncol = n, byrow = TRUE) - (1:n-1))
