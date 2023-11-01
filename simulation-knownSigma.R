@@ -1,4 +1,4 @@
-# To replicate the simu results in sec 4 of the paper, with known sigma2.
+# Goal: To replicate the simu results in sec 4 of the paper, with known sigma2.
 
 rm(list=ls())
 library(intervals)
@@ -11,7 +11,7 @@ library(foreach)
 library(doParallel)
 library(bigstatsr)
 
-#==============PART 1: helper functions===============
+#==============PART 1: Helper functions===============
 # perform post-selection correction for confidence inference
 postICci=function(X_dt, y, selected, alls, new_xpoint, criteria='aic', alpha=0.05, sigma2){
   #input:
@@ -121,8 +121,7 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, criteria='aic', alpha=0.0
   
 }
 
-#cdf F(t) of truncated normal, given mean=mu, sd=se, and domain intervals
-##property: F is monotone in its mean mu
+# cdf F(t) of truncated normal, given mean=mu, sd=se, and domain intervals
 cdfF=function(mu, se, df=0, exclude_intervals,value){
   #input:
   #- mu: mean parameter in truncNormal
@@ -148,7 +147,7 @@ cdfF=function(mu, se, df=0, exclude_intervals,value){
 }
 
 
-#helper func: find the quadratic root
+# helper func: find the quadratic root
 quad <- function(A,B,C){
   #input: in quadratic functions A*x^2 + B*x + C = 0
   #- A: coefficient of the quadratic term x^2
@@ -181,8 +180,7 @@ get_standard_errors <- function(X,new_x) {
   std_error
 }
 
-#helper func: to facilitate parallel computation for each dataset
-#run model selection with the specified model selection criteria, and return 95% CI for response mean
+# helper func: run model selection with the specified model selection criteria, and return 95% CI for response mean
 subfunc=function(statistic='aic', all_compete_models=NA, alpha=0.05,sigma2){
   #input: 
   #- statistic: model selection criteria, must be one of aic, bic, aicc
@@ -388,7 +386,7 @@ cor_matrix <- switch(scenario, ar1_matrix(p, 0.5), ar1_matrix(p, -0.5),
                      diag(p), equal_cor_matrix(p, 0.5), equal_cor_matrix(p, -0.5))
 
 
-#===============PART3: EXPERIMENTS==============================
+#===============PART3: Run experiments==============================
 set.seed(1)
 # some new x points to test performance of prediction
 num_newdt=10 #number of new data points whose predictive performance is to be tested
