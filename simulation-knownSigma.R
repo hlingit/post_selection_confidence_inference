@@ -6,6 +6,10 @@ library(nleqslv)
 library(foreach)
 library(leaps)
 library(MASS)
+library(parallel)
+library(foreach)
+library(doParallel)
+library(bigstatsr)
 
 #==============PART 1: helper functions===============
 # perform post-selection correction for confidence inference
@@ -269,13 +273,7 @@ subfunc=function(statistic='aic', all_compete_models=NA, alpha=0.05,sigma2){
 }
 
 
-#------implementation: parallel version------------
-library(parallel)
-library(foreach)
-library(doParallel)
-library(bigstatsr)
-
-
+# the simulation fucntion: parallel version------------
 simulate <- function(N, B, p, statistic, sigma2=1,alpha=0.05){
   all_vars <- c(paste("X", 1:p, sep=""))
   overfitted = 0
