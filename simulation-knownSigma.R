@@ -1,5 +1,3 @@
-
-#--skip the comparisons in lemma2; also fix the node in parallel running; adapted from simu211118.R
 # To replicate the simu results in sec 5.1 of the paper, with known sigma2.
 
 rm(list=ls())
