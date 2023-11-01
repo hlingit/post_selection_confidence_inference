@@ -215,10 +215,6 @@ subfunc=function(statistic='aic', all_compete_models=NA, alpha=0.05,sigma2){
     size = which.min(aics)
   } else if (statistic == 'bic') {
     size = which.min(reg_summary$bic)
-  } else if (statistic == 'cp') {
-    size = which.min(reg_summary$cp)
-  } else if (statistic == 'adjr2') {
-    size = which.max(reg_summary$adjr2)
   } else if(statistic=='aicc'){
     aiccs <- rep(NA,ncol(X))
     for (i in 1:ncol(X)) {
