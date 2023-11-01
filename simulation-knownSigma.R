@@ -1,4 +1,4 @@
-# To replicate the simu results in sec 5.1 of the paper, with known sigma2.
+# To replicate the simu results in sec 4 of the paper, with known sigma2.
 
 rm(list=ls())
 library(intervals)
