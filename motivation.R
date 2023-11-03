@@ -18,23 +18,6 @@ overfit <- function(vars) {
   all(true_vars %in% vars) & (length(vars) > 3)
 }
 
-#get the standard error for the regression coefficient
-get_standard_errors <- function(X,new_x) {
-  #input:
-  #- X: design matrix
-  #- new_x: a new x point
-  
-  #output:
-  #- standard error of the predicted mean at new_x
-  
-  cov_inv <- t(X) %*%  X
-  cov_matrix <- solve(cov_inv)
-  std_error_matrix <- new_x %*% cov_matrix %*% t(new_x)
-  std_error=sqrt(diag(std_error_matrix))
-  std_error
-}
-
-
 #run model selection with the specified model selection criteria, and return 95% CI for response mean
 subfunc=function(statistic='aic', all_compete_models=NA, alpha=0.05,sigma2){
   #input: 
