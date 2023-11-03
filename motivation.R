@@ -178,10 +178,12 @@ set.seed(3)
 #===========PART 3: run simulation==========
 simulate(N=5000,B,p,statistic = 'aic')
 
-#output:
-# "Using sigma=1, overall coverage at each new_xpoints:"
-# 0.9048 0.9014 0.8682 0.9328 0.8738 0.9070 0.9024 0.8526 0.9182 0.8744
-# "With unkown sigma, overall coverage at each new_xpoints:"
-# 0.8916 0.8896 0.8572 0.9268 0.8636 0.8964 0.8920 0.8394 0.9088 0.8602
+# [1] "number of strictly overfitted model: 3662"
+# [1] "frequency of selected model size (from 1-p accordingly):"
+# [1]    0    0 1337 1537 1203  615  241   61    5    1
+# [1] "Using sigma=1, overall coverage at each new_xpoints:"
+# [1] 0.9048 0.9014 0.8682 0.9328 0.8738 0.9070 0.9024 0.8526 0.9182 0.8744
+# [1] "With unkown sigma, overall coverage at each new_xpoints:"
+# [1] 0.8916 0.8896 0.8572 0.9268 0.8636 0.8964 0.8920 0.8394 0.9088 0.8602
 
 
