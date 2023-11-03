@@ -15,10 +15,6 @@ sigmaKnown=F#assume noise level sigma is unknown
 
 #===Data generation==============
 # correlation structure of X: AR(1) with rho = 0.5
-ar1_matrix <- function(n, rho) {
-  exponent <- abs(matrix(1:n - 1, nrow = n, ncol = n, byrow = TRUE) - (1:n-1))
-  rho^exponent
-}
 cor_matrix=ar1_matrix(p, 0.5)
 
 #generate data used in model fitting
@@ -77,7 +73,7 @@ z=expand.grid(rep(list(0:1),p))[-1,]
 all_compete_models=(matrix(unlist(z), ncol = p, byrow = F))==1
 
 corrected_CI=postICci(X, y, selected=reg_summary$which[size,-1], all_compete_models, new_x,
-         criteria=statistic, alpha, sigmaKnown,sigmahat)
+         criteria=statistic, alpha, sigmahat)
 print(paste(1-alpha,' CI for predicted mean at new_x, with post-selection correction: (',
             round(corrected_CI[1],4),',',round(corrected_CI[2],4),')',sep = ''))
 # output:
