@@ -1,12 +1,11 @@
 library(intervals)
 library(nleqslv)
 
-postICci=function(X_dt,y,selected, alls, new_xpoint, criteria='aic',alpha=0.05,sigmaKnown=F,sigmahat=NA){
+postICci=function(X_dt,y,selected, alls, new_xpoint, criteria='aic',alpha=0.05,sigmahat=NA){
   #  Input Parameters:
   #  selected: the AIC selected model (vector: boolean element indicating whether the predictor is included or not)
   #  alls: all other models to be compard with AIC-selected model (matrix: each row represent a model)
-  #  sigmaKnown: if the noise level sigma^2 is known (boolean)
-  #  sigmahat: the ground truth noise level if sigmaKnown=T; default NA
+  #  sigmahat: the ground truth noise level if sigma is Known=T, or an estimated value if sigma is unknown.
   
   #  Output:
   #  (1-alpha)-level confidence interval: c(L, U)
@@ -17,7 +16,7 @@ postICci=function(X_dt,y,selected, alls, new_xpoint, criteria='aic',alpha=0.05,s
   }else if(criteria=='bic'){
     cons=log(n)
   }else if(criteria=='aicc'){
-    cons=2 #note: aicc=aic+(2k^2+2k)/(n-k-1)
+    #pass; note: aicc=aic+(2k^2+2k)/(n-k-1)
   }else{
     print("must be either aic, aicc or bic!")
     return(NA)
