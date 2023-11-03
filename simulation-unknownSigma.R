@@ -23,8 +23,8 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, statistic='aic', alpha=0.
   #input:
   #- X_dt: design matrix
   #- y: response
-  #- selected: the AIC selected model (vector: boolean element indicating whether the predictor is included or not)
-  #- alls: all other models to be compard with AIC-selected model (binary matrix: each row represent a model)
+  #- selected: the selected model (vector: boolean element indicating whether the predictor is included or not)
+  #- alls: all other models to be compard with the selected model (binary matrix: each row represent a model)
   #- new_xpoint: new x point
   #- statistic: model selection criteria, must be one of 'aic', 'bic', 'aicc'
   #- alpha: significance level
@@ -43,7 +43,7 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, statistic='aic', alpha=0.
     #skip
   }
   else{
-    print("must be either aic or bic!")
+    print("must be either aic, aicc or bic!")
     return(NA)
   }
   
