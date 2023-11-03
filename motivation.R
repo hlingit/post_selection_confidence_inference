@@ -3,20 +3,10 @@
 rm(list=ls())
 library(foreach)
 library(leaps)
+library(MASS)
+source('sourceCode.R')
 
 #========PART 1: helper func for data generation and model selection========
-#generate the 1st-order auto-regressive correlation matrix
-ar1_matrix <- function(p, rho) {
-  #input:
-  #- p: number of variables
-  #- rho: correlation paramter
-  
-  #output:
-  #- a 1st-order auto-regressive correlation matrix
-  exponent <- abs(matrix(1:p - 1, nrow = p, ncol = p, byrow = TRUE) - (1:p-1))
-  rho^exponent
-}
-
 #check if the model is strictly overfitted
 overfit <- function(vars) {
   #input: a sequence of selected variable names (in the form of 'X1','X2',...)
