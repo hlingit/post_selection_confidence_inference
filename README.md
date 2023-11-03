@@ -1,4 +1,4 @@
-# post_selection_confidence_inference
+# Post selection confidence inference
 
 The goal of this research is to build corrected confidence interval for linear estimators if the model used in linear regression is determined by information-based model selection criteria, such as AIC, BIC, etc.
 
