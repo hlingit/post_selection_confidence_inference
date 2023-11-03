@@ -155,7 +155,7 @@ equal_cor_matrix <- function(p, rho) {
   rho*matrix(rep(1, p ^ 2), nrow = p, ncol = p) + (1-rho)*diag(p)
 }
 
-#get the standard error for the regression coefficient
+# Function: Get standard error of mean response for new data samples, using ground truth sigma=1
 get_standard_errors <- function(X,new_x) {
   #input:
   #- X: design matrix
@@ -170,4 +170,3 @@ get_standard_errors <- function(X,new_x) {
   std_error=sqrt(diag(std_error_matrix))
   std_error
 }
-
