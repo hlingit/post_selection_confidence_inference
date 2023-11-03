@@ -125,24 +125,6 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, criteria='aic', alpha=0.0
   
 }
 
-# Get standard error of mean response for new data samples, using ground truth sigma=1
-# An element at index i is a standard error of the ith data sample.
-# Parameters: X is the data used to fit the model; new_x is the new data points
-get_standard_errors <- function(X,new_x) {
-  #input:
-  #- X: design matrix
-  #- new_x: a new x point
-  
-  #output:
-  #- standard error of the predicted mean at new_x
-  
-  cov_inv <- t(X) %*%  X
-  cov_matrix <- solve(cov_inv)
-  std_error_matrix <- new_x %*% cov_matrix %*% t(new_x)
-  std_error=sqrt(diag(std_error_matrix))
-  std_error
-}
-
 # helper func: run model selection with the specified model selection criteria, and return 95% CI for response mean
 subfunc=function(statistic='aic', all_compete_models=NA, alpha=0.05,sigma2){
   #input: 
