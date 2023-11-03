@@ -14,3 +14,5 @@ In the `simulation-knownSigma.R`, we provide the R code to replicate the simulat
 
 In the `simulation-unknownSigma.R`, we provide the R code to replicate the simulation results in sec 4 of the paper, for the case of unknown sigma2.
 
+In the `realdata.R`, we provide the R code to replicate the US consumption example in sec 5 of the paper. The US consumption dataset we used is the `us_change.csv` file.
+
