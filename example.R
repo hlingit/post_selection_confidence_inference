@@ -77,7 +77,7 @@ corrected_CI=postICci(X, y, selected=reg_summary$which[size,-1], all_compete_mod
 print(paste(1-alpha,' CI for predicted mean at new_x, with post-selection correction: (',
             round(corrected_CI[1],4),',',round(corrected_CI[2],4),')',sep = ''))
 # output:
-# "0.95 CI for predicted mean at new_x, with post-selection correction: (-7.4372,-5.7213)"
+# "0.95 CI for predicted mean at new_x, with post-selection correction: (-7.4026,-5.7433)"
 
 #In comparsion: before correction
 est_ci_newdt=predict(est_fit, data.frame(t(new_x)), interval = "confidence",level=1-alpha)
@@ -86,5 +86,5 @@ print(paste(1-alpha,' CI for predicted mean at new_x before correction: (',
 # output:
 # "0.95 CI for predicted mean at new_x before correction: (-7.3661,-5.7212)"
 
-#notice the 0.95 CI becomes wider (1.7159 vs 1.6449) after post-selection inference
+#notice the 0.95 CI becomes wider after post-selection inference
 
