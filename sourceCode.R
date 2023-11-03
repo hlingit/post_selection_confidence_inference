@@ -122,10 +122,23 @@ cdfF=function(mu, se, df=0, exclude_intervals,value){
   return(result)
 }
 
-#helper func: find the quadratic root
+# helper func: find the quadratic root
 quad <- function(A,B,C)
 {
   answer <- c((-B - sqrt(B^2 - 4 * A * C)) / (2 * A),
               (-B + sqrt(B^2 - 4 * A * C)) / (2 * A))
   return(answer)
 }
+
+# Function generates a correlation matrix corresponding to AR(1) dependence structure.
+ar1_matrix <- function(n, rho) {
+  exponent <- abs(matrix(1:n - 1, nrow = n, ncol = n, byrow = TRUE) - (1:n-1))
+  rho^exponent
+}
+
+# Function generates an equal correlation matrix.
+equal_cor_matrix <- function(n, rho) {
+  rho*matrix(rep(1, n ^ 2), nrow = n, ncol = n) + (1-rho)*diag(n)
+}
+
+
