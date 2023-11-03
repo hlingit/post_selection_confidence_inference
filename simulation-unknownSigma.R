@@ -40,7 +40,7 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, statistic='aic', alpha=0.
   }else if(statistic=='bic'){
     cons=log(n)
   }else if(statistic=='aicc'){
-    #skip
+    # pass
   }
   else{
     print("must be either aic, aicc or bic!")
@@ -68,7 +68,9 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, statistic='aic', alpha=0.
     #exp weight involving cons
     s_hat=sum(selected)#size of selected model
     s_tp=sum(alls[s,])#size of model alls[s,]
-    wt=exp(cons*(s_hat-s_tp)/n)
+    if(criteria=='aic' | criteria=='bic'){
+      wt=exp(cons*(s_hat-s_tp)/n)
+    }
     if(statistic=='aicc'){
       wt=exp((2*(s_hat-s_tp)+2*s_hat*(s_hat+1)/(n-s_hat-1)-2*s_tp*(s_tp+1)/(n-s_tp-1))/n)
     }
