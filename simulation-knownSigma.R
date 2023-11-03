@@ -17,8 +17,8 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, criteria='aic', alpha=0.0
   #input:
   #- X_dt: design matrix
   #- y: response
-  #- selected: the AIC selected model (vector: boolean element indicating whether the predictor is included or not)
-  #- alls: all other models to be compard with AIC-selected model (matrix: each row represent a model)
+  #- selected: the selected model (boolean vector indicating whether the predictor is included or not)
+  #- alls: all other models to be compard with the selected model (matrix: each row represent a model)
   #- new_xpoint: new x point
   #- criteria: model selection criteria, must be one of 'aic', 'bic', 'aicc'
   #- alpha: significance level
@@ -36,7 +36,7 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, criteria='aic', alpha=0.0
     #pass
   }
   else{
-    print("must be either aic or bic!")
+    print("must be either aic, aicc or bic!")
     return(NA)
   }
   #record the excluded intervals for those TruncNormal with 2 intervals
