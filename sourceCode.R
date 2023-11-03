@@ -155,4 +155,19 @@ equal_cor_matrix <- function(p, rho) {
   rho*matrix(rep(1, p ^ 2), nrow = p, ncol = p) + (1-rho)*diag(p)
 }
 
+#get the standard error for the regression coefficient
+get_standard_errors <- function(X,new_x) {
+  #input:
+  #- X: design matrix
+  #- new_x: a new x point
+  
+  #output:
+  #- standard error of the predicted mean at new_x
+  
+  cov_inv <- t(X) %*%  X
+  cov_matrix <- solve(cov_inv)
+  std_error_matrix <- new_x %*% cov_matrix %*% t(new_x)
+  std_error=sqrt(diag(std_error_matrix))
+  std_error
+}
 
