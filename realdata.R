@@ -1,7 +1,7 @@
 #a textbook example from https://otexts.com/fpp3/regression-intro.html, chap 7.5
 
 rm(list = ls())
-source('/Users/linhm/Desktop/Li/postAIC/code for github/sourceCode.R')
+source('./sourceCode.R')
 # load packages
 library(leaps)
 library(intervals)
@@ -128,7 +128,7 @@ postICci_general=function(X_dt, y, selected, alls,eta, criteria='aic', alpha=0.0
 }
 
 #=============PART 2: Read in data===============
-us_change=read.csv('/Users/linhm/Desktop/Li/postAIC/us_change.csv')
+us_change=read.csv('./us_change.csv')
 us_change=us_change[,2:6]
 
 #num of candidate predictors
