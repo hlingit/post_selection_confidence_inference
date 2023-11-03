@@ -130,15 +130,29 @@ quad <- function(A,B,C)
   return(answer)
 }
 
-# Function generates a correlation matrix corresponding to AR(1) dependence structure.
-ar1_matrix <- function(n, rho) {
-  exponent <- abs(matrix(1:n - 1, nrow = n, ncol = n, byrow = TRUE) - (1:n-1))
+# Function: generate the 1st-order auto-regressive correlation matrix
+ar1_matrix <- function(p, rho) {
+  #input:
+  #- p: number of variables
+  #- rho: correlation paramter
+  
+  #output:
+  #- a 1st-order auto-regressive correlation matrix
+  
+  exponent <- abs(matrix(1:p - 1, nrow = p, ncol = p, byrow = TRUE) - (1:p-1))
   rho^exponent
 }
 
 # Function generates an equal correlation matrix.
-equal_cor_matrix <- function(n, rho) {
-  rho*matrix(rep(1, n ^ 2), nrow = n, ncol = n) + (1-rho)*diag(n)
+equal_cor_matrix <- function(p, rho) {
+  #input:
+  #- p: number of variables
+  #- rho: correlation paramter
+
+  #output:
+  #- an equi-correlation matrix
+  
+  rho*matrix(rep(1, p ^ 2), nrow = p, ncol = p) + (1-rho)*diag(p)
 }
 
 
