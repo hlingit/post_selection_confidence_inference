@@ -1,6 +1,8 @@
 # Goal: To replicate the simu results in sec 4 of the paper, with known sigma2.
 
 rm(list=ls())
+source('sourceCode.R')
+# load packages
 library(intervals)
 library(nleqslv)
 library(foreach)
@@ -121,47 +123,6 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, criteria='aic', alpha=0.0
   U=nleqslv(value+qnorm(1-alpha/2)*se, f1)$x
   return(c(L, U))
   
-}
-
-# cdf F(t) of truncated normal, given mean=mu, sd=se, and domain intervals
-cdfF=function(mu, se, df=0, exclude_intervals,value){
-  #input:
-  #- mu: mean parameter in truncNormal
-  #- se: standard error parameter in truncNormal
-  #- exclude_intervals: truncated-out region in truncNormal
-  #- value: observed value of the truncNormal random variable
-  
-  #output:
-  #- value of cdf F(value) of truncated normal
-  
-  normalizer=1-sum(pnorm(exclude_intervals@.Data[,2], mean = mu, sd=se)-pnorm(exclude_intervals@.Data[,1], mean=mu, sd=se))
-  int_left_endpoints=pnorm(exclude_intervals@.Data[,1], mean = mu,sd=se)
-  if(length(int_left_endpoints)>1){
-    int_left_endpoints=int_left_endpoints-c(0, pnorm(exclude_intervals@.Data[-length(int_left_endpoints),2], mean = mu, sd=se))
-    int_left_endpoints=cumsum(int_left_endpoints)
-  }
-  int_left_endpoints=int_left_endpoints/normalizer
-  value_loc=which(exclude_intervals@.Data[,1]>value)[1]-1
-  if(is.na(value_loc)){value_loc=length(int_left_endpoints)}
-  result=int_left_endpoints[value_loc]+(pnorm(value, mean = mu, sd=se)-pnorm(exclude_intervals@.Data[value_loc,2], mean = mu, sd=se))/normalizer
-  
-  return(result)
-}
-
-
-# helper func: find the quadratic root
-quad <- function(A,B,C){
-  #input: in quadratic functions A*x^2 + B*x + C = 0
-  #- A: coefficient of the quadratic term x^2
-  #- B: coefficient of the linear term x
-  #- C: the constant
-  
-  #output:
-  #- the solution to this quadratic function
-  
-  answer <- c((-B - sqrt(B^2 - 4 * A * C)) / (2 * A),
-              (-B + sqrt(B^2 - 4 * A * C)) / (2 * A))
-  return(answer)
 }
 
 # Get standard error of mean response for new data samples, using ground truth sigma=1
@@ -352,19 +313,6 @@ simulate <- function(N, B, p, statistic, sigma2=1,alpha=0.05){
   print(coverage_selected_corrected/matrix(rep(size_selected,num_newdt),nrow = p,byrow = F))
   
 }
-
-
-# Function generates a correlation matrix corresponding to AR(1) dependence structure.
-ar1_matrix <- function(n, rho) {
-  exponent <- abs(matrix(1:n - 1, nrow = n, ncol = n, byrow = TRUE) - (1:n-1))
-  rho^exponent
-}
-
-# Function generates an equal correlation matrix.
-equal_cor_matrix <- function(n, rho) {
-  rho*matrix(rep(1, n ^ 2), nrow = n, ncol = n) + (1-rho)*diag(n)
-}
-
 
 #===============PART2: Simulation settings==============================
 N <- 5000 #num of iterations
