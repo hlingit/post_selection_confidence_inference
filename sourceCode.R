@@ -45,7 +45,9 @@ postICci=function(X_dt,y,selected, alls, new_xpoint, criteria='aic',alpha=0.05,s
     }
     s_hat=sum(selected)#size of selected model
     s_tp=sum(alls[s,])#size of model alls[s,]
-    wt=exp(cons*(s_hat-s_tp)/n)
+    if(criteria=='aic' | criteria=='bic'){
+      wt=exp(cons*(s_hat-s_tp)/n)
+    }
     if(criteria=='aicc'){
       wt=exp((2*(s_hat-s_tp)+2*s_hat*(s_hat+1)/(n-s_hat-1)-2*s_tp*(s_tp+1)/(n-s_tp-1))/n)
     }
@@ -85,46 +87,39 @@ postICci=function(X_dt,y,selected, alls, new_xpoint, criteria='aic',alpha=0.05,s
   if(ub_min<Inf){
     exclude_intervals=interval_union(exclude_intervals,Intervals(c(ub_min, Inf)))
   }
-  se=sqrt(sum(eta^2))*sigmahat
+  
+  se=sqrt(sum(eta^2))*sigmahat    
   value=c(t(eta)%*%y)
   
-  f1=function(mu){return (cdfF(mu, se, df=n-sum(selected)-1, exclude_intervals,value, sigmaKnown = sigmaKnown)-alpha/2)}
-  f2=function(mu){return (cdfF(mu, se, df=n-sum(selected)-1, exclude_intervals,value,sigmaKnown = sigmaKnown)-1+alpha/2)}
+  f1=function(mu){return (cdfF(mu, se, df=n-sum(selected)-1, exclude_intervals,value)-alpha/2)}
+  f2=function(mu){return (cdfF(mu, se, df=n-sum(selected)-1, exclude_intervals,value)-1+alpha/2)}
   L=nleqslv(value+qnorm(alpha/2)*se,f2)$x
   U=nleqslv(value+qnorm(1-alpha/2)*se, f1)$x
   return(c(min(L,U), max(L,U)))
 }
 
-#helper func
-cdfF=function(mu, se, df=NA, exclude_intervals,value,sigmaKnown=F){
-  if(!sigmaKnown){
-    #rescale the truncated intervals so we can use truncated t
-    rescale_excludeInt=(exclude_intervals@.Data-mu)/se
-    rescale_value=(value-mu)/se
-    normalizer=1-sum(pt(rescale_excludeInt[,2], df=df)-pt(rescale_excludeInt[,1],df=df))
-    int_left_endpoints=pt(rescale_excludeInt[,1], df=df)
-    if(length(int_left_endpoints)>1){
-      int_left_endpoints=int_left_endpoints-c(0, pt(rescale_excludeInt[-length(int_left_endpoints),2], df=df))
-      int_left_endpoints=cumsum(int_left_endpoints)
-    }
-    int_left_endpoints=int_left_endpoints/normalizer
-    value_loc=which(rescale_excludeInt[,1]>rescale_value)[1]-1
-    if(is.na(value_loc)){
-      value_loc=length(int_left_endpoints)
-    }
-    result=int_left_endpoints[value_loc]+(pt(rescale_value,df=df)-pt(rescale_excludeInt[value_loc,2], df=df))/normalizer
-  }else{
-    normalizer=1-sum(pnorm(exclude_intervals@.Data[,2], mean = mu, sd=se)-pnorm(exclude_intervals@.Data[,1], mean=mu, sd=se))
-    int_left_endpoints=pnorm(exclude_intervals@.Data[,1], mean = mu,sd=se)
-    if(length(int_left_endpoints)>1){
-      int_left_endpoints=int_left_endpoints-c(0, pnorm(exclude_intervals@.Data[-length(int_left_endpoints),2], mean = mu, sd=se))
-      int_left_endpoints=cumsum(int_left_endpoints)
-    }
-    int_left_endpoints=int_left_endpoints/normalizer
-    value_loc=which(exclude_intervals@.Data[,1]>value)[1]-1
-    if(is.na(value_loc)){value_loc=length(int_left_endpoints)}
-    result=int_left_endpoints[value_loc]+(pnorm(value, mean = mu, sd=se)-pnorm(exclude_intervals@.Data[value_loc,2], mean = mu, sd=se))/normalizer
+# helper func: cdf F(t) of truncated normal, given mean=mu, sd=se, and domain intervals
+cdfF=function(mu, se, df=0, exclude_intervals,value){
+  #input:
+  #- mu: mean parameter in truncNormal
+  #- se: standard error parameter in truncNormal
+  #- exclude_intervals: truncated-out region in truncNormal
+  #- value: observed value of the truncNormal random variable
+  
+  #output:
+  #- value of cdf F(value) of truncated normal
+  
+  normalizer=1-sum(pnorm(exclude_intervals@.Data[,2], mean = mu, sd=se)-pnorm(exclude_intervals@.Data[,1], mean=mu, sd=se))
+  int_left_endpoints=pnorm(exclude_intervals@.Data[,1], mean = mu,sd=se)
+  if(length(int_left_endpoints)>1){
+    int_left_endpoints=int_left_endpoints-c(0, pnorm(exclude_intervals@.Data[-length(int_left_endpoints),2], mean = mu, sd=se))
+    int_left_endpoints=cumsum(int_left_endpoints)
   }
+  int_left_endpoints=int_left_endpoints/normalizer
+  value_loc=which(exclude_intervals@.Data[,1]>value)[1]-1
+  if(is.na(value_loc)){value_loc=length(int_left_endpoints)}
+  result=int_left_endpoints[value_loc]+(pnorm(value, mean = mu, sd=se)-pnorm(exclude_intervals@.Data[value_loc,2], mean = mu, sd=se))/normalizer
+  
   return(result)
 }
 
