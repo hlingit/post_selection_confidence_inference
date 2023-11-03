@@ -193,8 +193,8 @@ cis_corrected
 # 
 # [1] "Post-AIC corrected 95% CI for each regression coefficient:"
 # > cis_corrected
-#                   l1_mse      u1_mse   l2_olasso   u2_olasso
-# Income        0.66146524  0.82526995  0.65446730  0.83546913
-# Production   -0.01115300  0.11520277 -0.01378375  0.11756396
-# Savings      -0.05938233 -0.04712340 -0.06023854 -0.04661389
-# Unemployment -0.45825078  0.06364616 -0.46776089  0.07568029
+# l1_mse      u1_mse   l2_olasso   u2_olasso
+# Income        0.66196053  0.82453209  0.65500529  0.83454636
+# Production   -0.01085851  0.11478631 -0.01350435  0.11717081
+# Savings      -0.05931392 -0.04715935 -0.06014920 -0.04665282
+# Unemployment -0.45639229  0.06232770 -0.46613950  0.07438737
