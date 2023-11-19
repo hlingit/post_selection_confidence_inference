@@ -69,7 +69,7 @@ postICci=function(X_dt, y, selected, alls, new_xpoint, statistic='aic', alpha=0.
     #exp weight involving cons
     s_hat=sum(selected)#size of selected model
     s_tp=sum(alls[s,])#size of model alls[s,]
-    if(criteria=='aic' | criteria=='bic'){
+    if(statistic=='aic' | statistic=='bic'){
       wt=exp(cons*(s_hat-s_tp)/n)
     }
     if(statistic=='aicc'){
